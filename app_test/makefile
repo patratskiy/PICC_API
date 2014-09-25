@@ -1,8 +1,8 @@
 
 #CC	= /usr/local/arm/4.2.2-eabi/usr/bin/arm-linux-gcc
 #LD	= /usr/local/arm/4.2.2-eabi/usr/bin/arm-linux-gcc
-CC	= /opt/arm/usr/bin/arm-linux-gcc
-LD	= /opt/arm/usr/bin/arm-linux-gcc
+CC	= arm-linux-gcc 
+LD	= arm-linux-gcc 
 
 BFLLIBPATH=../Library
 INCLUDE = -I . ../Library

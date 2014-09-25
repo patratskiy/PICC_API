@@ -1,6 +1,9 @@
 
 
 
+#ifndef  PICC_PAX_POS_API_H
+#define  PICC_PAX_POS_API_H
+
 //=================================================
 //			   RF card functions
 //uchar PiccOpen(void);
@@ -192,6 +195,9 @@ uchar PiccRemove(uchar mode,uchar cid);
 PiccOpen()函数重新开启射频卡模块。 
 **************************************************************************/ 
 void PiccClose(void);
+
+
+#endif
 
 
 

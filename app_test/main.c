@@ -9,8 +9,15 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <time.h>
+#include <sys/timeb.h>
 
-#include ""
+
+#include "../Library/picc_api_quckv4.h"
+#include "../Library/posapi_t100.h"
+#include "../Library/posapi.h"
+#include "../Library/Ctype.h"
+
 
 void main()
 {
@@ -58,13 +65,13 @@ void main()
 	} 
 	while(1) 
 	{ 
-		tmpc=PiccRemove(¡®R¡¯,0); 
+		tmpc=PiccRemove('R',0); 
 		if(!tmpc)break; 
 		if(tmpc>=3) 
 		{ 
 			 // Beep( ); 
 			printf("PLS REMOVE CARD"); 
-			delay(500); 
+			//delay(500); 
 		} 
 	}
 	
