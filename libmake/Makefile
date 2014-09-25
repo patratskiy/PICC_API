@@ -7,25 +7,18 @@
 
 BFLLIBPATH=../Library
 
-SOURCES := $(wildcard $(BFLLIBPATH)/api/*.c)
-SOURCES += $(wildcard $(BFLLIBPATH)/bfl_1_1/*.c)
-SOURCES += $(wildcard $(BFLLIBPATH)/bfl_1_1/AS3911/*.c)
-SOURCES += $(wildcard $(BFLLIBPATH)/bfl_1_1/EMV/*.c)
-SOURCES += $(wildcard $(BFLLIBPATH)/bfl_1_1/microchip/src/*.c)
-SOURCES += $(wildcard $(BFLLIBPATH)/bfl_1_1/mifare_src/*.c)
+SOURCES := $(wildcard $(BFLLIBPATH)/*.c) 
 
 LIBCOBJECTS = $(patsubst %.c,%.o,$(SOURCES))
 
 
-INCLUDE = -I . -I $(BFLLIBPATH)/api -I $(BFLLIBPATH)/bfl_1_1/AS3911 -I $(BFLLIBPATH)/bfl_1_1/EMV -I $(BFLLIBPATH)/bfl_1_1/microchip/include \
-	-I $(BFLLIBPATH)/bfl_1_1/mifare_src -I $(BFLLIBPATH)/bfl_1_1
-
+INCLUDE = -I . 
 clib: $(LIBCOBJECTS)
-	/opt/arm/usr/bin/arm-linux-ar -r libCBFL.a $(LIBCOBJECTS)
+	arm-linux-ar -r libCBFL.a $(LIBCOBJECTS)
 	cp libCBFL.a ../app_test/
 	
 CXXFLAGS = -W -g  $(INCLUDE)
-CXX =  /opt/arm/usr/bin/arm-linux-gcc $(CXXFLAGS) -fPIC  -D "AS3911_PBOC"
+CXX =  arm-linux-gcc $(CXXFLAGS) -fPIC  -D "AS3911_PBOC"
 CXXOPTIONS = -g -D "__DEBUG__"
 
 $(LIBCOBJECTS): %.o: %.c

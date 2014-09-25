@@ -1,5 +1,17 @@
 	
-	
+#include <stdio.h>
+#include <fcntl.h> 
+#include <stdio.h>
+#include <errno.h> 
+#include <fcntl.h>
+#include <termio.h>
+#include <unistd.h> 
+#include <string.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#include ""
+
 void main()
 {
 	char tmpc; 
@@ -22,15 +34,16 @@ void main()
 			// ScrClrLine(2,3); 
 			// ScrPrint(0,2,1, ¡°PLS WAVE CARD¡­¡±); 
 		} 
-		if(!kbhit() && getkey()= =KEYCANCEL)return 2; 
+		
 	}//while(1), card detect loop 
+	
 	printf("successfully  DETECT ");  
 	// ScrPrint(0,2,0x01,"SELECT PPSE..."); 
 	as.Command[0]=0x00;    
 	as.Command[1]=0xa4;    
 	as.Command[2]=0x04;  //0x00--HANDLE,0x04-FNAME 
 	as.Command[3]=0x00;   
-	as.Lc=14; //2 for HANDLE,14 for FNAME 
+	as.Lc=14; //  f o r HANDLE,14 for FNAME 
 	as.Le=256;             
 	memcpy(as.DataIn,"\x3f\x00",2); 
 	strcpy(as.DataIn,"1PAY.SYS.DDF01");//as card 

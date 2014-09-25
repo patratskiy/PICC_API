@@ -5,11 +5,11 @@ CC	= /opt/arm/usr/bin/arm-linux-gcc
 LD	= /opt/arm/usr/bin/arm-linux-gcc
 
 BFLLIBPATH=../Library
-INCLUDE = -I . 
+INCLUDE = -I . ../Library
 
 CFLAGS = -W -g  -DPBOC_DEBUG $(INCLUDE)
-SRC    = pboc_test.c
-OBJ    = pboc_test.o
+SRC    = main.c
+OBJ    = main.o
 EXE    = pboc_test
 
 all:$(OBJ)
