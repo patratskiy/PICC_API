@@ -24,28 +24,38 @@
 #include "posapi.h"
 #include "Ctype.h"
 
+EmvPicc_t detect_picc;
+
 int main()
 {
 	char tmpc; 
 	uchar timeout;
 	APDU_SEND as; 
 	APDU_RESP ar; 
+	PICC_PARA picc_para; 
 
 	tmpc=PiccOpen(); 
-	if(tmpc)return 1; 
 
+   
+	memset(&picc_para,0x00,sizeof(PICC_PARA)); 
+	picc_para.b_modulate_w=1; 
+	picc_para.b_modulate_val=3; 
+	picc_para.card_buffer_w=1; 
+	picc_para.card_buffer_val=64; 
+	tmpc=PiccSetup('w', &picc_para); 
+	if(tmpc) return 2; 	
+
+	timeout=5;
+	
 	while(1) 
 	{ 
-		tmpc=PiccDetect(0, NULL, NULL, NULL, NULL); 
-		if(!tmpc)break;//Card has been detected successfully 
-		if(tmpc!=3) 
-		{ 
-			  printf("FAILED TO DETECT CARD:%02X",tmpc); 
-			//Beep(); 
-			// DelayMs(500); 
-			// ScrClrLine(2,3); 
-			// ScrPrint(0,2,1, ¡°PLS WAVE CARD¡­¡±); 
-		} 
+		tmpc=PiccDetect(0, &detect_picc.cardType, detect_picc.uid, &detect_picc.uidLength, &timeout); 
+		if(!tmpc)
+		{
+
+			break;//Card has been detected successfully 
+
+		}
 		
 	}//while(1), card detect loop 
 	

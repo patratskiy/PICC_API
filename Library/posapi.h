@@ -26,6 +26,23 @@
 #endif
 
 
+
+#ifndef     u8
+#define     u8               unsigned char
+#endif
+#ifndef     u32
+#define     u32                unsigned int
+#endif
+
+#ifndef     s16
+#define     s16                short int
+#endif
+#ifndef     s32
+#define     s32                 int
+#endif
+
+
+
 //===========================================================
 //           structure for smart card operation
 //===========================================================
@@ -317,10 +334,10 @@ typedef struct
 	unsigned char b_modulate_val;//Type B modulate index value
 
 	uchar card_buffer_w;//added in V1.00C,20061204
-	ushort card_buffer_val;//max_frame_size of PICC
+	uchar card_buffer_val;//max_frame_size of PICC
 
 	uchar wait_retry_limit_w;//added in V1.00F,20071212
-	ushort wait_retry_limit_val;//max retry count for WTX block requests,default 3
+	uchar wait_retry_limit_val;//max retry count for WTX block requests,default 3
 	// 20080617 
 	uchar card_type_check_w; // 卡片类型检查写入允许：1--允许，其它值--不允许，主要用于避免因卡片不规范引起的问题
 	
@@ -369,10 +386,24 @@ typedef struct
 	unsigned char user_control_w;
 	unsigned char user_control_key_val;
 	
-	unsigned char reserved[72]; //modify by nt 2013/03/11 original 74.保留字节，用于将来扩展；写入时应全清零
-	 
 
 }PICC_PARA;
+
+
+typedef struct EmvPicc_s
+{
+    u8 uid[10]; /*!< UID or PUPI of the PICC.  MAX is 10*/
+    u8 uidLength; /*!< Length of the UID/PUPI in bytes. */
+	u8 cardType; /*!< Datarate bits PCD->PICC. */
+    u8 fwi; /*!< Frame wait integer of the PICC. */
+    u8 fsci; /*!< Frame size integer of the PICC. */
+    u8 sfgi; /*!< Special frame guard time of the PICC. */
+    u8 dPiccPcd; /*!< Datarate bits PICC->PCD. */
+    u8 dPcdPicc; /*!< Datarate bits PCD->PICC. */
+	
+    int (*activate)(struct EmvPicc_s *picc); /*!< Activation function callback. */
+    s16 (*remove)(struct EmvPicc_s *picc); /*!< Card removal function callback. */
+} EmvPicc_t;
 
 
 #endif
