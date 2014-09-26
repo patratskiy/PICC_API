@@ -61,15 +61,17 @@ int main()
 	
 	printf("successfully  DETECT ");  
 	// ScrPrint(0,2,0x01,"SELECT PPSE..."); 
+	//static const u8 emvSelectppseApdu[] = { 0x00, 0xA4, 0x04, 0x00, 0x0E
+  //  , '2', 'P', 'A', 'Y', '.', 'S', 'Y', 'S', '.', 'D', 'D', 'F', '0', '1', 0x00 };
 	as.Command[0]=0x00;    
 	as.Command[1]=0xa4;    
 	as.Command[2]=0x04;  //0x00--HANDLE,0x04-FNAME 
 	as.Command[3]=0x00;   
 	as.Lc=14; //  f o r HANDLE,14 for FNAME 
 	as.Le=256;             
-	memcpy(as.DataIn,"\x3f\x00",2); 
-	strcpy(as.DataIn,"1PAY.SYS.DDF01");//as card 
-	//strcpy(as.DataIn,"2PAY.SYS.DDF01");//as standard 
+	//memcpy(as.DataIn,"\x3f\x00",2); 
+	//strcpy(as.DataIn,"1PAY.SYS.DDF01");//as card 
+	strcpy(as.DataIn,"2PAY.SYS.DDF01");//as standard 
 	memset(ar.DataOut,0x00,512); 
 	 
 	tmpc = PiccIsoCommand(0,&as,&ar); 

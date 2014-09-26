@@ -48,13 +48,15 @@
 //===========================================================
 typedef struct{
    	unsigned char Command[4];
-   	unsigned short Lc;
+   	unsigned char Lc;
    	unsigned char  DataIn[512];
    	unsigned short Le;
+	unsigned short Lcode;
+
 }APDU_SEND;
 
 typedef struct{
-	unsigned short LenOut;
+	unsigned char LenOut;
    	unsigned char  DataOut[512];
    	unsigned char  SWA;
    	unsigned char  SWB;

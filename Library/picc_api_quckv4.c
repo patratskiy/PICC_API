@@ -42,11 +42,14 @@ uchar PiccOpen(void)
 			PRINTF("open %s failed 2\n", "/dev/spi_rfid");
 			return 0xff;	
 		}	
+		ioctl(iAS3911_Fd, IOC_SPI_PICC_OPEN, NULL);
 	}
 	else
 	{
 		PRINTF("warning:have alreadly opened it \n");
+		
 	}
+	
 	PRINTF("PiccOpen:\n");
 	return 0;
 }
@@ -80,20 +83,58 @@ uchar PiccDetect(uchar Mode,uchar *CardType,uchar *SerialInfo,uchar *Len_Serical
 	return 0;
 }
 
+
+typedef struct{
+   	unsigned int Len;
+   	unsigned char  DataIn[600];
+
+
+}MESSAGE_BOX;
+
 uchar PiccIsoCommand(uchar cid,APDU_SEND *ApduSend,APDU_RESP *ApduRecv)
 {
+	unsigned int i;
+	
+	MESSAGE_BOX buf;
+	memset(&buf,0,sizeof(buf));
+	buf.Len=ApduSend->Lc+5;
+	memcpy(buf.DataIn,ApduSend->Command,5);
+	memcpy(buf.DataIn+5,ApduSend->DataIn,ApduSend->Lc);
+
+	ioctl(iAS3911_Fd, IOC_SPI_PICC_APDU, (void*)&buf);
+	ApduRecv->LenOut=(unsigned char)buf.Len -2;
+	ApduRecv->SWA=buf.DataIn[0];
+	ApduRecv->SWB=buf.DataIn[1];
+	memcpy(ApduRecv->DataOut,buf.DataIn+2,ApduRecv->LenOut);
+#if 1	
+	PRINTF("PiccIsoCommand:\n");
+
+	for(i=0;i<buf.Len;i++)
+	{
+		PRINTF(" %02x",buf.DataIn[i]);
+
+	}
+	PRINTF(" \n");
+	
+#endif	
+	//memcpy(ApduRecv.DataOut,ApduSend.);
 	return 0;
 }
 
 uchar PiccRemove(uchar mode,uchar cid)
 {
+
+	ioctl(iAS3911_Fd, IOC_SPI_PICC_REMOVE, NULL);
+
 	return 0;
 }
 
 void  PiccClose(void)
 {
 	iAS3911_Fd=-1;
+	ioctl(iAS3911_Fd, IOC_SPI_PICC_CLOSE, NULL);
 	close(iAS3911_Fd);
+	
 	return ;
 }
 

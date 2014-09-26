@@ -57,7 +57,7 @@ uchar PiccSetup (uchar mode, PICC_PARA *picc_para);	// mich_temp: protype differ
 
 
 /**************************************************************************
-原型： uchar PiccDetect(uchar Mode,uchar *CardType,uchar *SerialInfo,uchar*CID,uchar *Other) 
+原型： uchar PiccDetect(uchar Mode,uchar *CardType,uchar *SerialInfo,uchar*Len_Serical,uchar *Other) 
 功能：  按指定的模式搜寻PICC卡片；搜到卡片后，将其选中和激活。 
 输入参数： 
 	Mode（用于指定卡片搜寻模式） 
