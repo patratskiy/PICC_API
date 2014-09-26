@@ -12,10 +12,19 @@
 #include <string.h>
 #include <ctype.h>
 
-#define uchar unsigned char
-#define uint unsigned int
-#define ulong unsigned long
-#define ushort unsigned short
+#ifndef     uchar
+#define     uchar               unsigned char
+#endif
+#ifndef     uint
+#define     uint                unsigned int
+#endif
+#ifndef     ulong
+#define     ulong               unsigned long
+#endif
+#ifndef     ushort
+#define     ushort              unsigned short
+#endif
+
 
 //===========================================================
 //           structure for smart card operation

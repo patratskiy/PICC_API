@@ -12,14 +12,19 @@
 #include <time.h>
 #include <sys/timeb.h>
 
-
+/*
 #include "../Library/picc_api_quckv4.h"
 #include "../Library/posapi_t100.h"
 #include "../Library/posapi.h"
 #include "../Library/Ctype.h"
 
+*/
+#include "picc_api_quckv4.h"
+#include "posapi_t100.h"
+#include "posapi.h"
+#include "Ctype.h"
 
-void main()
+int main()
 {
 	char tmpc; 
 	uchar timeout;

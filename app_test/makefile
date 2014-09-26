@@ -5,7 +5,7 @@ CC	= arm-linux-gcc
 LD	= arm-linux-gcc 
 
 BFLLIBPATH=../Library
-INCLUDE = -I . ../Library
+INCLUDE = -I . -I ../Library
 
 CFLAGS = -W -g  -DPBOC_DEBUG $(INCLUDE)
 SRC    = main.c

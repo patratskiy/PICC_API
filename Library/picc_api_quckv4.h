@@ -39,9 +39,9 @@ uchar PiccOpen(void);
 
 
 /**************************************************************************
-原型： 
-uchar PiccSetup (uchar mode, PICC_PARA *picc_para) 
-功能：写入指定的参数，用以适应较特殊的应用环境；或者读取当前的参数设置 默认为0 ,一般不需要更改
+原型： uchar PiccSetup (uchar mode, PICC_PARA *picc_para) 
+功能：写入指定的参数，用以适应较特殊的应用环境；
+			或者读取当前的参数设置 默认为0 ,一般不需要更改
 输入参数： 
 	mode  用于指定参数设置模式：’r’或‘R’，表示读取；’w’或‘W’，表示写入。 
 	picc_para  指向参数设置的结构指针。 默认为NULL
