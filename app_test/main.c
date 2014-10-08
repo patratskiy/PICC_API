@@ -29,6 +29,7 @@ EmvPicc_t detect_picc;
 int main()
 {
 	char tmpc; 
+	int i;
 	uchar timeout;
 	APDU_SEND as; 
 	APDU_RESP ar; 
@@ -45,7 +46,7 @@ int main()
 	tmpc=PiccSetup('w', &picc_para); 
 	if(tmpc) return 2; 	
 
-	timeout=5;
+	timeout=255;
 	
 	while(1) 
 	{ 
@@ -58,8 +59,21 @@ int main()
 		}
 		
 	}//while(1), card detect loop 
-	
+#if 0		
 	printf("successfully  DETECT ");  
+	printf("uid led:%d",detect_picc.uidLength);  
+
+	printf("uid:\n");
+
+	for(i=0;i<detect_picc.uidLength;i++)
+	{
+		printf(" %02x",detect_picc.uid[i]);
+
+	}
+	printf(" \n");
+	printf(" sizeof(unsigned short):%d ",sizeof(unsigned short));
+#endif	
+	printf("card type :%d \n",detect_picc.cardType);  
 	// ScrPrint(0,2,0x01,"SELECT PPSE..."); 
 	//static const u8 emvSelectppseApdu[] = { 0x00, 0xA4, 0x04, 0x00, 0x0E
   //  , '2', 'P', 'A', 'Y', '.', 'S', 'Y', 'S', '.', 'D', 'D', 'F', '0', '1', 0x00 };
@@ -84,11 +98,13 @@ int main()
 	{ 
 		tmpc=PiccRemove('R',0); 
 		if(!tmpc)break; 
-		if(tmpc>=3) 
+		if(tmpc  != 0) 
 		{ 
 			 // Beep( ); 
-			printf("PLS REMOVE CARD"); 
+#if 1				 
+			printf("REMOVE CARD fail "); 
 			//delay(500); 
+#endif				
 		} 
 	}
 	

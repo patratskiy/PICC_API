@@ -62,14 +62,17 @@ uchar PiccSetup (uchar mode, PICC_PARA *picc_para)
 
 uchar PiccDetect(uchar Mode,uchar *CardType,uchar *SerialInfo,uchar *Len_Serical,uchar *Other)
 {
-	int i;
+	//int i;
 	uchar data_buf[20];
 
 	data_buf[0]=*Other;
-	ioctl(iAS3911_Fd, IOC_SPI_PICC_DETECT, (void*)data_buf);
+	if(0 != ioctl(iAS3911_Fd, IOC_SPI_PICC_DETECT, (void*)data_buf))
+	{
+		return 2;
+	}
 	*CardType=data_buf[11];
 	*Len_Serical=data_buf[10];
-#if 1	
+#if 0	
 	PRINTF("PiccDetect:\n");
 
 	for(i=0;i<12;i++)
@@ -100,13 +103,16 @@ uchar PiccIsoCommand(uchar cid,APDU_SEND *ApduSend,APDU_RESP *ApduRecv)
 	buf.Len=ApduSend->Lc+5;
 	memcpy(buf.DataIn,ApduSend->Command,5);
 	memcpy(buf.DataIn+5,ApduSend->DataIn,ApduSend->Lc);
+	if(0 != ioctl(iAS3911_Fd, IOC_SPI_PICC_APDU, (void*)&buf) )
+	{
+		return 2;
+	}
 
-	ioctl(iAS3911_Fd, IOC_SPI_PICC_APDU, (void*)&buf);
 	ApduRecv->LenOut=(unsigned char)buf.Len -2;
 	ApduRecv->SWA=buf.DataIn[0];
 	ApduRecv->SWB=buf.DataIn[1];
 	memcpy(ApduRecv->DataOut,buf.DataIn+2,ApduRecv->LenOut);
-#if 1	
+#if 0	
 	PRINTF("PiccIsoCommand:\n");
 
 	for(i=0;i<buf.Len;i++)
@@ -124,9 +130,8 @@ uchar PiccIsoCommand(uchar cid,APDU_SEND *ApduSend,APDU_RESP *ApduRecv)
 uchar PiccRemove(uchar mode,uchar cid)
 {
 
-	ioctl(iAS3911_Fd, IOC_SPI_PICC_REMOVE, NULL);
+	return ioctl(iAS3911_Fd, IOC_SPI_PICC_REMOVE, &mode);
 
-	return 0;
 }
 
 void  PiccClose(void)
