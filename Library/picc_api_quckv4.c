@@ -136,10 +136,10 @@ uchar PiccRemove(uchar mode,uchar cid)
 
 void  PiccClose(void)
 {
-	iAS3911_Fd=-1;
+	
 	ioctl(iAS3911_Fd, IOC_SPI_PICC_CLOSE, NULL);
 	close(iAS3911_Fd);
-	
+	iAS3911_Fd=-1;
 	return ;
 }
 
