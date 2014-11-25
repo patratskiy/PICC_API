@@ -15,7 +15,7 @@ EXE    = pboc_test
 all:$(OBJ)
 	$(CC) $(OBJ) -L . -lCBFL -o $(EXE)
 	cp $(EXE) scl_test
-	cp $(EXE) /mnt/hgfs/wintolinux/lw_ftp/
+	cp $(EXE) /mnt/hgfs/HeGuoJin/wintolinux/lw_ftp/
 #	cp $(EXE) /mnt/hgfs/E/lw_ftp/pboc_test
 %o:%c 
 	$(CC)  -c $(CFLAGS) $< -o $@
