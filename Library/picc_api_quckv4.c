@@ -108,10 +108,10 @@ uchar PiccIsoCommand(uchar cid,APDU_SEND *ApduSend,APDU_RESP *ApduRecv)
 		return 2;
 	}
 
-	ApduRecv->LenOut=(unsigned char)buf.Len -2;
-	ApduRecv->SWA=buf.DataIn[0];
-	ApduRecv->SWB=buf.DataIn[1];
-	memcpy(ApduRecv->DataOut,buf.DataIn+2,ApduRecv->LenOut);
+    ApduRecv->LenOut=(unsigned char)buf.Len -2;
+    ApduRecv->SWA=buf.DataIn[buf.Len-2];
+    ApduRecv->SWB=buf.DataIn[buf.Len-1];
+    memcpy(ApduRecv->DataOut,buf.DataIn,ApduRecv->LenOut);
 #if 0	
 	PRINTF("PiccIsoCommand:\n");
 
