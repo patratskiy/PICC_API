@@ -1,0 +1,31 @@
+
+CC	= arm-linux-gcc
+#LD	= /usr/local/arm/4.2.2-eabi/usr/bin/arm-linux-gcc
+#CC	= /opt/arm/usr/bin/arm-linux-gcc
+#LD	= /opt/arm/usr/bin/arm-linux-gcc
+
+BFLLIBPATH=../Library
+
+INCLUDE = -I .  
+	
+CFLAGS = -W -g  -DPBOC_DEBUG $(INCLUDE)
+SRC    = pboch_test.c
+OBJ    = pboch_test.o
+EXE    = pboc_test
+
+all:$(OBJ)
+	$(CC) $(OBJ) -O0 -L . -o $(EXE)
+	cp $(EXE) scl_test
+	cp $(EXE) /mnt/hgfs/wintolinux/lw_ftp/
+#	cp $(EXE) /mnt/hgfs/HeGuoJin/wintolinux/lw_ftp/
+%o:%c 
+	$(CC)  -O0 -c $(CFLAGS) $< -o $@
+		
+clean:
+	rm -f *.o $(EXE)
+
+
+
+
+
+	
