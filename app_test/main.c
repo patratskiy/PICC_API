@@ -110,18 +110,25 @@ again:
 
 	printf("the status of Select 1PAY.SYS.DDF01: 0x%02x%02x\n", ar.SWA, ar.SWB);
 	
-	printf("\n\n----- select MF --------\n");
+//-------------------------------------------------
 	memset(as.DataIn,0x00,512); 
 	as.Command[0]=0x00;    
 	as.Command[1]=0xa4;    
-	as.Command[2]=0x04;  //0x00--HANDLE,0x04-FNAME 
+	as.Command[2]=0x00;  //0x00--HANDLE,0x04-FNAME 
 	as.Command[3]=0x00;   
 	as.Lc=2; //  f o r HANDLE,14 for FNAME 
 	as.Le=256;             
-	memcpy(as.DataIn,"\x3f\x00",2); 
+	//memcpy(as.DataIn,"\x3f\x00",2); 
+	as.DataIn[0]=0x3f;
+	as.DataIn[0]=0x00;
+	memset(ar.DataOut,0x00,512); 	
 	
-	memset(ar.DataOut,0x00,512); 	   
- 
+	printf("\n\n----- select MF --------\n");	
+	for (i=0;i<7;i++)
+		printf(" %02x", as.Command[i]);      
+
+	printf("]\n");	
+	
 	tmpc = PiccIsoCommand(0,&as,&ar); 
 
 	if(tmpc) 

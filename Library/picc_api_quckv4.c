@@ -101,8 +101,22 @@ uchar PiccIsoCommand(uchar cid,APDU_SEND *ApduSend,APDU_RESP *ApduRecv)
 	MESSAGE_BOX buf;
 	memset(&buf,0,sizeof(buf));
 	buf.Len=ApduSend->Lc+5;
-	memcpy(buf.DataIn,ApduSend->Command,5);
-	memcpy(buf.DataIn+5,ApduSend->DataIn,ApduSend->Lc);
+	memcpy(buf.DataIn,ApduSend->Command,4);
+
+	if (ApduSend->Lc)
+	{
+		buf.DataIn[4]=ApduSend->Lc;
+		memcpy(buf.DataIn+5,ApduSend->DataIn,ApduSend->Lc);	
+	}
+	else if (ApduSend->Le)
+	{
+		buf.DataIn[4]=ApduSend->Le;
+	}
+	else
+	{
+		buf.DataIn[4]=0;
+	}
+
 	if(0 != ioctl(iAS3911_Fd, IOC_SPI_PICC_APDU, (void*)&buf) )
 	{
 		return 2;
